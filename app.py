@@ -40,7 +40,6 @@ def load_uploaded_file(uploaded_file):
     if suffix == "csv":
         df = pd.read_csv(uploaded_file)
     elif suffix == "gz":
-        # gzipped CSV – pandas infers compression automatically
         df = pd.read_csv(uploaded_file, compression="infer")
     elif suffix == "parquet":
         df = pd.read_parquet(uploaded_file)
@@ -265,8 +264,8 @@ with client_tab:
             # Distribution of cost per hour
             if "UsageHours" in client_data.columns and "CostUSD" in client_data.columns:
                 unit_costs_all = client_data["CostUSD"] / client_data["UsageHours"]
-                # Fixed color and hide legend to avoid the 'variable' legend item
-                hist_color_map = generate_color_map(["CostPerHour"])  # single category for consistent color
+                # Fixed color, single category for consistent color
+                hist_color_map = generate_color_map(["CostPerHour"])  
                 fig_hist = px.histogram(
                     unit_costs_all,
                     nbins=20,
